@@ -8,13 +8,9 @@ router = APIRouter()
 @router.post("/generate-qr/")
 async def create_qr(request: QRRequest):
     try:
-        # Convertimos la URL validada a string
         url_str = str(request.url)
-        
-        # Generamos la imagen en memoria
         image_buffer = generate_qr_in_memory(url_str)
         
-        # Devolvemos el archivo directamente al cliente
         return StreamingResponse(image_buffer, media_type="image/png")
     
     except Exception as e:
